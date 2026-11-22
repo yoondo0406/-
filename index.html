@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>그림자 안부 · Shadow Nod</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #070b14;
+        color: #f6e7c1;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Pretendard", sans-serif;
+        overflow: hidden;
+        touch-action: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      main {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .hud {
+        position: fixed;
+        top: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        z-index: 10;
+        opacity: 0.78;
+        transition: opacity 0.3s ease;
+        max-width: 94vw;
+      }
+      .hud:hover {
+        opacity: 1;
+      }
+      button {
+        background: rgba(246, 231, 193, 0.05);
+        color: rgba(246, 231, 193, 0.78);
+        border: 1px solid rgba(246, 231, 193, 0.16);
+        padding: 5px 11px;
+        border-radius: 999px;
+        font-size: 11px;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        transition: all 0.25s ease;
+        white-space: nowrap;
+      }
+      button:hover,
+      button.active {
+        background: rgba(232, 200, 130, 0.18);
+        border-color: rgba(246, 231, 193, 0.55);
+        color: #fff6de;
+      }
+      .whisper {
+        position: fixed;
+        bottom: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: rgba(246, 231, 193, 0.45);
+        pointer-events: none;
+        z-index: 10;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hud">
+      <button id="btn-alone" class="active" onclick="setMode('alone')">
+        혼자
+      </button>
+      <button id="btn-together" onclick="setMode('together')">함께</button>
+      <button id="btn-invite" onclick="copyRoomLink()">링크 복사</button>
+      <button id="btn-record" onclick="toggleRecordNod()">안부 남기기</button>
+      <button id="btn-replay" onclick="playSavedNod()">안부 재생</button>
+    </div>
+
+    <main id="canvas-container"></main>
+
+    <div class="whisper" id="whisper-text">alone</div>
+
+    <script src="sketch.js"></script>
+  </body>
+</html>
